@@ -39,7 +39,6 @@ public class AdapterContact extends RecyclerView.Adapter<AdapterContact.ContactV
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         ModelContact modelContact = contactList.get(position);
-
         //get data
         String id = modelContact.getId();
         String image = modelContact.getImage();

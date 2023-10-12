@@ -26,7 +26,6 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+Constants.TABLE_NAME);
-
         onCreate(db);
     }
 
@@ -84,5 +83,4 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
         return arrayList;
     }
-
 }

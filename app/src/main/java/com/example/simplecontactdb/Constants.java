@@ -26,4 +26,6 @@ public class Constants {
             + C_EMAIL + " TEXT, "
             + C_DOB + " TEXT"
             + " );";
+
+
 }
