@@ -20,41 +20,38 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //create table on database
-        db.execSQL(Constants.CREATE_TABLE);
+        db.execSQL(Constants.CREATE_TABLE);//create table users
+        db.execSQL(Constants.CREATE_TABLE_NOTES);//create table NOTES
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+Constants.TABLE_NAME);
+        //upgrade db when change
+        db.execSQL("DROP TABLE IF EXISTS "+Constants.TABLE_NAME);//upgrade users table
+        db.execSQL("DROP TABLE IF EXISTS "+Constants.TABLE_NOTE_NAME);//upgrade NOTES table
         onCreate(db);
     }
 
-    // Insert Function to insert data in database
+    // Insert Function to insert CONTACT data in database
     public long insertContact(String image,String name,String phone,String email,String dob){
-
         //get writable database to write data on db
         SQLiteDatabase db = this.getWritableDatabase();
-
         // create ContentValue class object to save data
         ContentValues contentValues = new ContentValues();
-
         // id will save automatically as we write query
         contentValues.put(Constants.C_IMAGE,image);
         contentValues.put(Constants.C_NAME,name);
         contentValues.put(Constants.C_PHONE,phone);
         contentValues.put(Constants.C_EMAIL,email);
         contentValues.put(Constants.C_DOB,dob);
-
         //insert data in row, It will return id of record
         long id = db.insert(Constants.TABLE_NAME,null,contentValues);
-
         // close db
         db.close();
-
         //return id
         return id;
     }
-
+//get all data of CONTACT
     public ArrayList<ModelContact> getAllData(){
         //create arrayList
         ArrayList<ModelContact> arrayList = new ArrayList<>();
@@ -82,5 +79,49 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         db.close();
         return arrayList;
+    }
+    // Insert Function to insert NOTE data in database
+    public long insertNote(int contactId, String content){
+        //get writable database to write data on db
+        SQLiteDatabase db = this.getWritableDatabase();
+        // create ContentValue class object to save data
+        ContentValues contentValues = new ContentValues();
+        //id auto
+        contentValues.put(Constants.N_CONTACT_ID, contactId);
+        contentValues.put(Constants.N_CONTENT, content);
+        //insert data in row, It will return id of record
+        long id = db.insert(Constants.TABLE_NOTE_NAME,null,contentValues);
+        //close db
+        db.close();
+        // return id
+        return id;
+    }
+    //get notes by contactId
+    public ArrayList<ModelNotes> getNotesByContactId(int ContactId){
+        ArrayList<ModelNotes> notes = new ArrayList<>();
+        //sql select query
+        String selectQuery = "SELECT * FROM " + Constants.TABLE_NOTE_NAME +
+                " WHERE " + Constants.N_CONTACT_ID + " = ?";
+        //get readable db to read data on db
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all record and add to list
+        if(cursor.moveToFirst()){
+            do{
+                //create new note obj
+                ModelNotes note = new ModelNotes();
+                //set note properties
+                note.setId(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(Constants.N_ID))));
+                note.setContactId(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(Constants.N_CONTACT_ID))));
+                note.setContent(cursor.getString(cursor.getColumnIndexOrThrow(Constants.N_CONTENT)));
+                //add to list
+                notes.add(note);
+            }while (cursor.moveToNext());
+        }
+        //remember that always close db
+        //close db
+        db.close();
+        //return notes
+        return notes;
     }
 }

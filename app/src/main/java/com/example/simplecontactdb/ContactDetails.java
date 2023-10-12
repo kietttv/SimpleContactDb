@@ -16,6 +16,7 @@ import com.example.simplecontactdb.Constants;
 import com.example.simplecontactdb.DbHelper;
 import com.example.simplecontactdb.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -43,6 +44,14 @@ public class ContactDetails extends AppCompatActivity {
         actionBar.setTitle("User Details");
         map();
         loadDataById();
+        //convert variable id string to integer
+        int contactId = Integer.parseInt(id);
+        //get note
+        ArrayList<ModelNotes> notes = dbHelper.getNotesByContactId(contactId);
+        //debug
+        for (ModelNotes note:notes) {
+            System.out.println(note.getContent());
+        }
     }
 
     private void loadDataById() {
