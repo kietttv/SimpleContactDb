@@ -104,7 +104,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 " WHERE " + Constants.N_CONTACT_ID + " = ?";
         //get readable db to read data on db
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(ContactId)});
         // looping through all record and add to list
         if(cursor.moveToFirst()){
             do{
@@ -122,6 +122,7 @@ public class DbHelper extends SQLiteOpenHelper {
         //close db
         db.close();
         //return notes
+        System.out.println("note size: " + notes.size());
         return notes;
     }
 }

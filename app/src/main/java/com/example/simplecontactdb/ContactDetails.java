@@ -2,6 +2,7 @@ package com.example.simplecontactdb;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,7 +11,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.simplecontactdb.Constants;
 import com.example.simplecontactdb.DbHelper;
@@ -26,6 +29,8 @@ public class ContactDetails extends AppCompatActivity {
     private String id;
     private DbHelper dbHelper;
     private ActionBar actionBar;
+    private RecyclerView notesRv;
+    private AdapterNote adapternote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +49,7 @@ public class ContactDetails extends AppCompatActivity {
         actionBar.setTitle("User Details");
         map();
         loadDataById();
-        //convert variable id string to integer
-        int contactId = Integer.parseInt(id);
-        //get note
-        ArrayList<ModelNotes> notes = dbHelper.getNotesByContactId(contactId);
-        //debug
-        for (ModelNotes note:notes) {
-            System.out.println(note.getContent());
-        }
+        loadNotes();
     }
 
     private void loadDataById() {
@@ -81,6 +79,16 @@ public class ContactDetails extends AppCompatActivity {
         db.close();
     }
 
+    public void loadNotes(){
+        adapternote = new AdapterNote(this, dbHelper.getNotesByContactId(Integer.parseInt(id)));
+        notesRv.setAdapter(adapternote);
+    }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        loadNotes();
+//    }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -94,5 +102,7 @@ public class ContactDetails extends AppCompatActivity {
         emailTv = findViewById(R.id.emailTv);
         DoBTv = findViewById(R.id.DoBTv);
         profileIv = findViewById(R.id.profileIv);
+        notesRv = findViewById(R.id.notesRv);
     }
+
 }
