@@ -2,9 +2,9 @@ package com.example.simplecontactdb;
 
 public class Constants {
     // database or db name
-    public static final String DATABASE_NAME = "CONTACT_DB";
+    public static final String DATABASE_NAME = "CONTACT_DB_NEW";
     //database version
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     // table Users
     public static final String TABLE_NAME = "CONTACT";
     // table column or field name of users table
@@ -32,10 +32,11 @@ public class Constants {
             + C_DOB + " TEXT"
             + " );";
     // query for create NOTES table
-    public static final String CREATE_TABLE_NOTES = "CREATE TABLE" + TABLE_NOTE_NAME + "( "
+    public static final String CREATE_TABLE_NOTES = "CREATE TABLE " + TABLE_NOTE_NAME + "( "
             + N_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + N_CONTACT_ID + " INTEGER, "
             + N_CONTENT + " TEXT, "
-            + "FOREIGN KEY ("+ C_ID + ") REFERENCES " + TABLE_NAME + "(" + C_ID + ")"
+            + "FOREIGN KEY ("+ N_CONTACT_ID + ") REFERENCES " + TABLE_NAME + "(" + C_ID + ")"
             +")";
+    //Pay attention to syntax errors, especially is the SPACES
 }

@@ -77,28 +77,37 @@
                     android:textColor="@color/colorTextSecondary"
                     />
             </TableRow>
-            <TableRow>
+
+            <TableRow android:id="@+id/tableLayout">
+
                 <TextView
                     android:text="Date of Birth"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/DoBTv"
-                    tools:text="0177000800"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/colorTextSecondary"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:textColor="@color/colorTextSecondary"
-                    />
+                    tools:text="0177000800" />
             </TableRow>
         </TableLayout>
+        <Button
+            android:id="@+id/createNoteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Note"
+            android:layout_below="@id/tableLayout"
+            android:layout_marginTop="16dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/_10sdp"
-            android:layout_below="@id/tableLayout" />
+            android:padding="@dimen/_10sdp" />
     </LinearLayout>
 </RelativeLayout>
