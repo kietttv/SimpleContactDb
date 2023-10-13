@@ -2,7 +2,6 @@ package com.example.simplecontactdb;
 
 public class ModelContact {
     private String id,name,image,phone,email,dob;
-
     // create constructor
     public ModelContact(String id, String name, String image, String phone, String email, String dob) {
         this.id = id;

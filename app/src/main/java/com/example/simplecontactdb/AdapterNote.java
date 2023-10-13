@@ -15,13 +15,11 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.NotesViewHolde
     private Context context;
     private ArrayList<ModelNotes> notes;
     private DbHelper dbHelper;
-
     public AdapterNote(Context context, ArrayList<ModelNotes> notes) {
         this.context = context;
         this.notes = notes;
         this.dbHelper = new DbHelper(context);
     }
-
     @NonNull
     @Override
     public AdapterNote.NotesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,15 +33,12 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.NotesViewHolde
         String id = modelNotes.getId();
         String contactId = modelNotes.getContactId();
         String content = modelNotes.getContent();
-
         holder.noteTextView.setText(content);
     }
-
     @Override
     public int getItemCount() {
         return notes.size();
     }
-
     public class NotesViewHolder extends RecyclerView.ViewHolder {
         TextView noteTextView;
         public NotesViewHolder(@NonNull View itemView) {

@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ public class ContactDetails extends AppCompatActivity {
     private ActionBar actionBar;
     private RecyclerView notesRv;
     private AdapterNote adapternote;
+    private Button BtnAddNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +50,23 @@ public class ContactDetails extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("User Details");
+
         map();
         loadDataById();
         loadNotes();
+        //Display popup
+        BtnAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Create new popup
+                PopupAddNote popup = new PopupAddNote();
+                //Set context cho DbHelper, DbHelper can't null
+                popup.setDbHelper(new DbHelper(ContactDetails.this));
+                // Display popup when BtnAddNote button clicked
+                popup.showPopup(ContactDetails.this, Integer.parseInt(id));
+            }
+        });
     }
-
     private void loadDataById() {
         String selectQuery =  "SELECT * FROM "+ Constants.TABLE_NAME + " WHERE " + Constants.C_ID + " =\"" + id + "\"";
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -83,12 +98,6 @@ public class ContactDetails extends AppCompatActivity {
         adapternote = new AdapterNote(this, dbHelper.getNotesByContactId(Integer.parseInt(id)));
         notesRv.setAdapter(adapternote);
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        loadNotes();
-//    }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -103,6 +112,7 @@ public class ContactDetails extends AppCompatActivity {
         DoBTv = findViewById(R.id.DoBTv);
         profileIv = findViewById(R.id.profileIv);
         notesRv = findViewById(R.id.notesRv);
+        BtnAddNote = findViewById(R.id.BtnAddNote);
     }
 
 }

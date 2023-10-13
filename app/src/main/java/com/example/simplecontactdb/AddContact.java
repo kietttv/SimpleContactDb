@@ -62,7 +62,6 @@ public class AddContact extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveData();
-
             }
         });
 
@@ -99,7 +98,6 @@ public class AddContact extends AppCompatActivity {
                 toast("Inserted Successfully.... "+id);
             Intent intent = new Intent(AddContact.this, MainActivity.class);
             startActivity(intent);
-
         }else {
             toast("Please enter full fill before save");
         }

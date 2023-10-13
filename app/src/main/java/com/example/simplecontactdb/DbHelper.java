@@ -57,11 +57,9 @@ public class DbHelper extends SQLiteOpenHelper {
         ArrayList<ModelContact> arrayList = new ArrayList<>();
         //sql command query
         String selectQuery = "SELECT * FROM "+Constants.TABLE_NAME;
-
         //get readable db
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
-
         // looping through all record and add to list
         if (cursor.moveToFirst()){
             do {
@@ -122,7 +120,7 @@ public class DbHelper extends SQLiteOpenHelper {
         //close db
         db.close();
         //return notes
-        System.out.println("note size: " + notes.size());
+//        System.out.println("note size: " + notes.size());
         return notes;
     }
 }
