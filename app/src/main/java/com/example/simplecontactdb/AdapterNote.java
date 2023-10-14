@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,6 +57,13 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.NotesViewHolde
 //                dbHelper.updateNote(Integer.parseInt(id),"Note " + id + " updated");
             }
         });
+        holder.btnDeleteNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dbHelper.deleteNote(Integer.parseInt(id));
+                ((ContactDetails) contactDetails).loadNotes();
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -63,9 +71,11 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.NotesViewHolde
     }
     public class NotesViewHolder extends RecyclerView.ViewHolder {
         TextView noteTextView;
+        Button btnDeleteNote;
         public NotesViewHolder(@NonNull View itemView) {
             super(itemView);
             noteTextView = itemView.findViewById(R.id.noteTextView);
+            btnDeleteNote = itemView.findViewById(R.id.btnDeleteNote);
         }
     }
 }
