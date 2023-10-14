@@ -95,7 +95,7 @@ public class ContactDetails extends AppCompatActivity {
     }
 
     public void loadNotes(){
-        adapternote = new AdapterNote(this, dbHelper.getNotesByContactId(Integer.parseInt(id)));
+        adapternote = new AdapterNote(this, dbHelper.getNotesByContactId(Integer.parseInt(id)),this);
         notesRv.setAdapter(adapternote);
     }
     @Override

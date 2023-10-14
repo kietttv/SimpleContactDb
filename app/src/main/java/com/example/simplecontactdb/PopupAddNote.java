@@ -42,10 +42,38 @@ public class PopupAddNote{
                 if(dbHelper != null){
                     dbHelper.insertNote(contactId, " " + noteContent);
                 }
-                //refresh ContactDetails
-                ((ContactDetails) activity).loadNotes();
                 // Close the popup
                 alertDialog.dismiss();
+                //refresh ContactDetails
+                ((ContactDetails) activity).loadNotes();
+            }
+        });
+    }
+    public void showUpdatePopup(final Activity activity, final int noteId, final String currentNote) {
+        // Use the existing layout and components, just change the title and note content
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.popup_add_note, null);
+        builder.setView(dialogView);
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        // Assign current note content to EditText
+        editTextNote = dialogView.findViewById(R.id.editTextNote);
+        editTextNote.setText(currentNote);
+
+        buttonSaveNote = dialogView.findViewById(R.id.buttonSaveNote);
+        buttonSaveNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String updatedNoteContent = editTextNote.getText().toString();
+                if(dbHelper != null){
+                    // Call the note update function in dbHelper
+                    dbHelper.updateNote(noteId, updatedNoteContent);
+                }
+                alertDialog.dismiss();
+                ((ContactDetails) activity).loadNotes();
             }
         });
     }
