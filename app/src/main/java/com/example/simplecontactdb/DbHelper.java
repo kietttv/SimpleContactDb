@@ -94,6 +94,29 @@ public class DbHelper extends SQLiteOpenHelper {
         // return id
         return id;
     }
+    // Update note
+    public int updateNote(int noteId, String content) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Constants.N_CONTENT, content);
+        // Updating row
+        return db.update(Constants.TABLE_NOTE_NAME, values, Constants.N_ID + " = ?",
+                new String[]{String.valueOf(noteId)});
+    }
+    // Delete a note
+    public void deleteNote(int noteId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Constants.TABLE_NOTE_NAME, Constants.N_ID + " = ?",
+                new String[]{String.valueOf(noteId)});
+        db.close();
+    }
+    // Delete note by contactId
+    public void deleteNoteByContactId(int contactId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Constants.TABLE_NOTE_NAME, Constants.N_CONTACT_ID + " = ?",
+                new String[]{String.valueOf(contactId)});
+        db.close();
+    }
     //get notes by contactId
     public ArrayList<ModelNotes> getNotesByContactId(int ContactId){
         ArrayList<ModelNotes> notes = new ArrayList<>();
@@ -119,8 +142,9 @@ public class DbHelper extends SQLiteOpenHelper {
         //remember that always close db
         //close db
         db.close();
-        //return notes
+        //debug
 //        System.out.println("note size: " + notes.size());
+        //return notes
         return notes;
     }
 }
